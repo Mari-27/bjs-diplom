@@ -1,21 +1,19 @@
 "use strict";
-const userForm = new UserForm;
- UserForm.loginFormCallback = function (data) {
-    ApiConnector.login(data, (response) => {
-        if (response.success) {
-            location.reload();
-        } else{
-             UserForm.setLoginErrorMessage(response.error);
-        }  
-    });
- }
-UserForm.registerFormCallback = function (data) {
-    ApiConnector.register (data, (response) => {
-        if (response.success) {
-            location.reload ();
-        } else {
-            UserForm.setRegisterErrorMessage(message)(response.error);
+const user = new UserForm();
+let data = {};
+user.loginFormCallback = function(data){
+    ApiConnector.login(data, (response, data) => 
+    {
+        if (response.success === false) throw response.error;
+        try{
+            console.log(response);
+            setTimeout(() => location.reload(), 1000);
+        } catch {
+            console.log(response);
         }
-    });
+    })
 }
-UserForm.run();
+
+user.registerFormCallback = function(data){
+    ApiConnector.register(data);
+}
